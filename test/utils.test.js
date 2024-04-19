@@ -34,7 +34,7 @@ describe("getCssModuleKeys", () => {
     expect(actual).toEqual([]);
   });
 
-  it("CSS module with one class", () => {
+  it("CJS CSS module with one class", () => {
     const content = `exports.locals = {
       "test": "test"
     };`;
@@ -42,11 +42,26 @@ describe("getCssModuleKeys", () => {
     expect(actual).toEqual(["test"]);
   });
 
-  it("CSS module with multiple classes", () => {
+  it("ESM CSS module with one class", () => {
+    const content = `export var test = "test";`;
+    const actual = getCssModuleKeys(content);
+    expect(actual).toEqual(["test"]);
+  });
+
+  it("CJS CSS module with multiple classes", () => {
     const content = `exports.locals = {
       "test1": "test1",
       "test2": "test2"
     };`;
+    const actual = getCssModuleKeys(content);
+    expect(actual).toEqual(["test1", "test2"]);
+  });
+
+  it("ESM CSS module with multiple classes", () => {
+    const content = `
+      export var test1 = "test1";
+      export var test2 = "test2";
+    `;
     const actual = getCssModuleKeys(content);
     expect(actual).toEqual(["test1", "test2"]);
   });
@@ -61,11 +76,24 @@ describe("getCssModuleKeys", () => {
     expect(actual).toEqual([]);
   });
 
-  it("CSS module with special class names", () => {
+  it("CJS CSS module with special class names", () => {
     const content = `.locals = {
       "øæå": "nordic",
       "+~@": "special",
       "f\\'o\\'o": "escaped",
+    };`;
+    const actual = getCssModuleKeys(content);
+    expect(actual).toEqual(["øæå", "+~@", "f\\'o\\'o"]);
+  });
+
+  it("ESM CSS module with special class names", () => {
+    const content = `
+      var _1 = "nordic";
+      export { _1 as "øæå" };
+      var _2 = "special";
+      export { _2 as "+~@" };
+      var _3 = "escaped";
+      export { _3 as "f\\'o\\'o" };
     };`;
     const actual = getCssModuleKeys(content);
     expect(actual).toEqual(["øæå", "+~@", "f\\'o\\'o"]);

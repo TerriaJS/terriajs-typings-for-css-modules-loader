@@ -61,13 +61,7 @@ module.exports = function (content, ...args) {
     this.cacheable();
   }
 
-  // let's only check `exports.locals` for keys to avoid getting keys from the sourcemap when it's enabled
-  // if we cannot find locals, then the module only contains global styles
-  const indexOfLocals = content.indexOf(".locals");
-  const cssModuleKeys =
-    indexOfLocals === -1
-      ? []
-      : getCssModuleKeys(content.substring(indexOfLocals));
+  const cssModuleKeys = getCssModuleKeys(content);
 
   /** @type {any} */
   const callback = this.async();
