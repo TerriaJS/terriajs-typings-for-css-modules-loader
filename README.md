@@ -2,6 +2,8 @@
 [![build][build]][build-url]
 [![deps][deps]][deps-url]
 
+Note: This repo is a fork of [jdelStrother/typings-for-css-modules-loader#css-loader-7](https://github.com/jdelStrother/typings-for-css-modules-loader/tree/css-loader-7) that makes `fixes typings-for-css-modules-loader` work with css-loader version > 7.
+
 # typings-for-css-modules-loader
 
 Webpack loader that generates TypeScript typings for CSS modules from css-loader on the fly
